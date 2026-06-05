@@ -193,7 +193,7 @@ jobs:
 
       - name: Setup Build Environment
         id: setup_env
-        uses: ./github/env_setup
+        uses: ./.github/env_setup
         with:
           op_config_json: ${{ toJSON(matrix) }}
           manifest: ${{ inputs.manifest }}
