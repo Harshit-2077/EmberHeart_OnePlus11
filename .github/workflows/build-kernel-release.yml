@@ -191,6 +191,17 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Setup Build Environment
+        id: setup_env
+        uses: ./github/env_setup
+        with:
+          op_config_json: ${{ toJSON(matrix) }}
+          manifest: ${{ inputs.manifest }}
+          use_custom_repo_parser: ${{ inputs.use_custom_repo_parser }}
+          common_branch_or_commit: ${{ inputs.common_branch_or_commit }}
+          msm_branch_or_commit: ${{ inputs.msm_branch_or_commit }}
+          vendor_branch_or_commit: ${{ inputs.vendor_branch_or_commit }}
+
       - name: Build Kernel
         id: build_kernel
         if: contains(fromJSON('["Kernel Only", "Mixed Build", "Monolithic Build"]'), inputs.build_target)
@@ -199,7 +210,6 @@ jobs:
           CCACHE_DIR: ${{ github.workspace }}/.kernel_ccache
           LDCACHE_DIR: ${{ github.workspace }}/.kernel_lto_cache
         with:
-          op_config_json: ${{ toJSON(matrix) }}
           ksun_branch_or_hash: ${{ inputs.ksun_branch }}
           evict_unused_ccache: ${{ inputs.evict_unused_ccache }}
           use_custom_repo_parser: ${{ inputs.use_custom_repo_parser }}
@@ -208,10 +218,7 @@ jobs:
           susfs_commit_hash_or_branch: ${{ inputs.susfs_branch_or_commit }}
           optimize_level: ${{ inputs.optimize_level }}
           kernel_uname: ${{ inputs.kernel_uname }}
-          manifest: ${{ inputs.manifest }}
-          common_branch_or_commit: ${{ inputs.common_branch_or_commit }}
-          msm_branch_or_commit: ${{ inputs.msm_branch_or_commit }}
-          vendor_branch_or_commit: ${{ inputs.vendor_branch_or_commit }}
+          compile_dlkm: ${{ inputs.compile_dlkm }}
 
       - name: Build Kernel Modules
         id: build_modules
@@ -221,13 +228,8 @@ jobs:
           CCACHE_DIR: ${{ github.workspace }}/.modules_ccache
           LDCACHE_DIR: ${{ github.workspace }}/.modules_lto_cache
         with:
-          op_config_json: ${{ toJSON(matrix) }}
           optimize_level: ${{ inputs.optimize_level }}
-          manifest: ${{ inputs.manifest }}
           evict_unused_ccache: ${{ inputs.evict_unused_ccache }}
-          use_custom_repo_parser: ${{ inputs.use_custom_repo_parser }}
-          vendor_branch_or_commit: ${{ inputs.vendor_branch_or_commit }}
-          msm_branch_or_commit: ${{ inputs.msm_branch_or_commit }}
           compile_dlkm: ${{ inputs.compile_dlkm }}
 
   trigger-release:
