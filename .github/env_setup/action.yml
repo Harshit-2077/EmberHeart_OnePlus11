@@ -170,7 +170,13 @@ runs:
         ARTIFACTS_DIR_DEBUG="$CONFIG/debug/artifacts"
         KERNEL_PLATFORM="$CONFIG/kernel_platform"
         COMMON="$KERNEL_PLATFORM/common"
-        MSM="$KERNEL_PLATFORM/msm-kernel"
+
+        if [[ "$BUILD_TYPE" == "Mixed Build" || "$BUILD_TYPE" == "Modules Only" ]]; then
+          MSM="$KERNEL_PLATFORM/msm-kernel"
+        else
+          MSM="$COMMON"
+        fi
+
         KBUILD_MIXED_TREE_DIR="$CONFIG/mixed_tree"
         WILD_KERNEL_PATCHES="$GITHUB_WORKSPACE/kernel_patches"
         KERNEL_PATCHES="$GITHUB_WORKSPACE/my_patches"
