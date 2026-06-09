@@ -394,14 +394,6 @@ runs:
             --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
             --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-        # LOCALVERSION branding
-        if [ -n "${CUSTOM_LOCALVERSION:-}" ]; then
-          ./scripts/config --file "$OUT/.config" \
-            --set-str LOCALVERSION "${CUSTOM_LOCALVERSION}" \
-            --disable LOCALVERSION_AUTO
-          sed -i 's/scm_version="$(scm_version --short)"/scm_version=""/' scripts/setlocalversion
-        fi
-
         SECONDS=0
 
         echo "Building kernel modules and dtbs..."
