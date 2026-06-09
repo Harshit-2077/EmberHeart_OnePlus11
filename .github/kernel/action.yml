@@ -852,7 +852,6 @@ runs:
         set -euo pipefail
         echo "::group::Build kernel"
         cd "$COMMON"
-        : > "$COMMON/.scmversion"
 
         # Ensure Python warnings are suppressed for scripts invoked by make
         export PYTHONWARNINGS="${PYTHONWARNINGS}"
@@ -920,6 +919,7 @@ runs:
 
         # LOCALVERSION branding
         if [ -n "${CUSTOM_LOCALVERSION:-}" ]; then
+          : > "$COMMON/.scmversion"
           ./scripts/config --file "$OUT/.config" \
             --set-str LOCALVERSION "${CUSTOM_LOCALVERSION}" \
             --disable LOCALVERSION_AUTO
