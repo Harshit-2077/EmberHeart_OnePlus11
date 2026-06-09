@@ -224,6 +224,7 @@ runs:
       shell: bash
       run: |
         OVERRIDES=""
+        cd "$CONFIG"
 
         if [[ -n "${{ inputs.common_branch_or_commit }}" ]]; then
           # Calculate the relative path from CONFIG to COMMON
