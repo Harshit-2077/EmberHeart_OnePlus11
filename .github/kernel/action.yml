@@ -924,6 +924,10 @@ runs:
             --set-str LOCALVERSION "${CUSTOM_LOCALVERSION}" \
             --disable LOCALVERSION_AUTO
           sed -i 's/scm_version="$(scm_version --short)"/scm_version=""/' scripts/setlocalversion
+          echo "[INFO] Custom branding applied to config"
+        else
+          ./scripts/config --file "$OUT/.config" \
+            --enable LOCALVERSION_AUTO
         fi
 
         echo "Starting build with $(nproc --all) threads..."
