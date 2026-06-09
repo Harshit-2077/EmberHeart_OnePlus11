@@ -825,15 +825,21 @@ runs:
         echo "::endgroup::"
 
     - name: Customize Kernel Branding
-      if: inputs.kernel_uname != ''
       shell: bash
+      env:
+        INPUT_UNAME: ${{ inputs.kernel_uname }}
       run: |
         set -euo pipefail
         echo "::group::Applying Kernel Branding..."
         cd "$COMMON"
-        mkdir -p out
-        CUSTOM_LOCALVERSION="-${ANDROID_RELEASE}-${{ inputs.kernel_uname }}"
-        echo "CUSTOM_LOCALVERSION=$CUSTOM_LOCALVERSION" >> "$GITHUB_ENV"
+        if [ -n "$INPUT_UNAME" ]; then
+          CUSTOM_LOCALVERSION="-${ANDROID_RELEASE}-${{ inputs.kernel_uname }}"
+          echo "CUSTOM_LOCALVERSION=$CUSTOM_LOCALVERSION" >> "$GITHUB_ENV"
+          echo "[INFO] Using kernel version: ${KERNEL_FULL_VER}${CUSTOM_LOCALVERSION}"
+        else
+          SCM=$(./scripts/setlocalversion 2>/dev/null || echo "-g$(git rev-parse --short HEAD)") || echo "ERROR"
+          echo "[INFO] Using default kernel version: ${KERNEL_FULL_VER}${SCM}"
+        fi
 
         echo "Kernel branding applied ✅"
         echo "::endgroup::"
