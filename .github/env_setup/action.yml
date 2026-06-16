@@ -386,7 +386,7 @@ runs:
           echo "Using system clang."
         fi
         $CLANG_FOUND || { echo "No clang toolchain found"; exit 1; }
-        echo "CLANG_BIN_PATH=$CLANG_BIN" >> "$GITHUB_PATH"
+        echo "${CLANG_BIN}" >> "$GITHUB_PATH"
         CLANG_VERSION="$("$CLANG_BIN/clang" --version | head -n1)"
         echo "CLANG_VERSION=$CLANG_VERSION" >> "$GITHUB_ENV"
         echo "[NOTICE] Using clang : $CLANG_VERSION"
