@@ -136,12 +136,13 @@ runs:
       uses: actions/cache/restore@v5
       with:
         path: ${{ env.CCACHE_DIR }}
-        key: ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-${{ env.KERNEL_FULL_VER }}
+        key: ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-${{ env.KERNEL_FULL_VER }}-${{ inputs.lto }}_LTO
         restore-keys: |
           ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-${{ env.KERNEL_FULL_VER }}
           ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-
 
     - name: Restore LTO cache
+      if: ${{ inputs.lto == 'Thin'}}
       uses: actions/cache/restore@v5
       with:
         path: ${{ env.LDCACHE_DIR }}
@@ -1304,9 +1305,10 @@ runs:
       uses: actions/cache/save@v5
       with:
         path: ${{ env.CCACHE_DIR }}
-        key: ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-${{ env.KERNEL_FULL_VER }}
+        key: ccache-${{ env.MODEL }}-kernel-${{ inputs.optimize_level }}-${{ env.KERNEL_FULL_VER }}-${{ inputs.lto }}_LTO
 
     - name: Save LTO cache
+      if: ${{ inputs.lto == 'Thin' }}
       uses: actions/cache/save@v5
       with:
         path: ${{ env.LDCACHE_DIR }}
