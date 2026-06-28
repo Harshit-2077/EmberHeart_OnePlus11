@@ -570,6 +570,8 @@ runs:
           --enable TCP_CONG_WESTWOOD \
           --set-str DEFAULT_TCP_CONG westwood
 
+        ./scripts/config --file arch/arm64/configs/gki_defconfig --enable CONFIG_RELAY
+
         echo "WESTWOOD added ✅"
         echo "::endgroup::"
 
