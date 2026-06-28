@@ -173,6 +173,17 @@ runs:
         rm -f $MSM/android/abi_gki_protected_exports_* || true
         df -h
 
+    - name: Disable some Config (for error free run)
+      shell: bash
+      run: |
+        set -euo pipefail
+        cd "$MSM"
+
+        #Disable
+        ./scripts/config --file arch/arm64/configs/gki_defconfig \
+          --disable CONFIG_MTD_OOPS
+
+
     - name: Add nethunter specfic drivers already present in kernel to be built as modules
       shell: bash
       run: |
