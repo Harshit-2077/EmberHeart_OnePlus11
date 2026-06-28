@@ -372,7 +372,8 @@ runs:
         SECONDS=0
 
         ./scripts/config --file "$OUT/.config" \
-          --disable CONFIG_MTD_OOPS
+          --disable CONFIG_MTD_OOPS \
+          --enable CONFIG_COMMON_CLK_QCOM
 
           ./scripts/config --file "$OUT/.config" --enable CONFIG_RELAY
 
