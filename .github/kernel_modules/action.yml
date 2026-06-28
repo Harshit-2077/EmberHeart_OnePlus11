@@ -185,6 +185,11 @@ runs:
           --module CONFIG_CFG80211 \
           --module CONFIG_MAC80211
 
+        ./scripts/config --file "$OUT/.config" --disable CONFIG_MTD_OOPS
+
+        ./scripts/config --file arch/arm64/configs/gki_defconfig --enable CONFIG_RELAY
+
+
     - name: Add nethunter specfic drivers already present in kernel to be built as modules
       shell: bash
       run: |
