@@ -556,6 +556,23 @@ runs:
         echo "OnePlus BBR added ✅"
         echo "::endgroup::"
 
+    - name: Add WESTWOOD and set it default 
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "::group::Adding WESTWOOD"
+        cd "$COMMON"
+
+        ./scripts/config --file arch/arm64/configs/gki_defconfig \
+          --disable DEFAULT_CUBIC \
+          --enable DEFAULT_WESTWOOD \
+          --enable TCP_CONG_ADVANCED \
+          --enable TCP_CONG_WESTWOOD \
+          --set-str DEFAULT_TCP_CONG westwood
+
+        echo "WESTWOOD added ✅"
+        echo "::endgroup::"
+
     - name: Add my kernel patches to common kernel
       if: env.SOC == 'kalama' && !contains(env.MANIFEST_NAME, 'CUSTOM') && inputs.use_opt_patches == 'true'
       shell: bash
