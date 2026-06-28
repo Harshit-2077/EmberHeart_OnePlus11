@@ -370,8 +370,9 @@ runs:
         SECONDS=0
 
         ./scripts/config --file "$OUT/.config" \
-          --disable CONFIG_MTD_OOPS \
-          --enable CONFIG_RELAY
+          --disable CONFIG_MTD_OOPS
+
+          ./scripts/config --file "$OUT/.config" --enable CONFIG_RELAY
 
         echo "Building kernel modules and dtbs..."
         make "${MAKE_FLAGS[@]}" O=$OUT olddefconfig
