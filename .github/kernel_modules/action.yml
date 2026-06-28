@@ -185,7 +185,7 @@ runs:
           --module CONFIG_CFG80211 \
           --module CONFIG_MAC80211
 
-        echo "# CONFIG_MTD_OOPS is not set" >> arch/arm64/configs/gki_defconfig
+        ./scripts/config --file out/.config --disable CONFIG_MTD_OOPS
 
         ./scripts/config --file arch/arm64/configs/gki_defconfig --enable CONFIG_RELAY
 
@@ -295,13 +295,6 @@ runs:
         fi
         echo "Build configs applied"
         echo "::endgroup::"
-
-    - name: Clean common kernel source tree
-      shell: bash
-      run: |
-        set -euo pipefail
-        cd "$COMMON"
-        make ARCH=arm64 mrproper
 
     - name: Build Kernel Modules and Dtbs
       shell: bash
