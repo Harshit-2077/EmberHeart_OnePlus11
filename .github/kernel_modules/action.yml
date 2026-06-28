@@ -437,7 +437,6 @@ runs:
 
         # QCOM ext modules
         EXT_QCOM+=(
-            ../vendor/qcom/opensource/mmrm-driver
             ../vendor/qcom/opensource/mm-drivers/hw_fence
             ../vendor/qcom/opensource/mm-drivers/sync_fence
             ../vendor/qcom/opensource/mm-drivers/msm_ext_display
