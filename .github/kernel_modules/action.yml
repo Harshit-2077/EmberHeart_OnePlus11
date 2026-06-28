@@ -185,7 +185,7 @@ runs:
           --module CONFIG_CFG80211 \
           --module CONFIG_MAC80211
 
-        ./scripts/config --file arch/arm64/configs/gki_defconfig --disable CONFIG_MTD_OOPS
+        echo "# CONFIG_MTD_OOPS is not set" >> arch/arm64/configs/gki_defconfig
 
         ./scripts/config --file arch/arm64/configs/gki_defconfig --enable CONFIG_RELAY
 
