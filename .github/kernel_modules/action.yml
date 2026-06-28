@@ -296,6 +296,13 @@ runs:
         echo "Build configs applied"
         echo "::endgroup::"
 
+    - name: Clean common kernel source tree
+      shell: bash
+      run: |
+        set -euo pipefail
+        cd "$COMMON"
+        make ARCH=arm64 mrproper
+
     - name: Build Kernel Modules and Dtbs
       shell: bash
       run: |
